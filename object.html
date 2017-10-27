@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>object</title>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function() {
+        // 使用字面量创造对象
+        var object0 = {
+            name: 'object',
+            start: function() {
+                console.log('开始了');
+            },
+            pause: function() {
+                console.log('暂停');
+            },
+            stop: function() {
+                console.log('结束');
+            },
+            _init_: function() {
+                this.start();
+                this.pause();
+                this.stop();
+            }
+        }
+
+        var object1 = new Object();
+
+        object1.name = 'object1';
+        object1.start = function () {
+            console.log('start...');
+        };
+        object1.pause = function () {
+            console.log('pause....');
+        };
+        object1.stop = function () {
+            console.log('stop...');
+        };
+        object1._init_ = function () {
+            this.start();
+            this.pause();
+            this.stop();
+        }
+
+        // 自定义构造函数
+        function Component(name, start, end) {
+            this.name = name;
+            this.start = start;
+            this.end = end;
+            this.testFu = function() {
+                console.log('123');
+            };
+            this._init_ = function() {
+                console.log(this.name);
+                console.log(this.start);
+                console.log(this.end);
+            }
+        }
+
+        var object2 = new Component('许静晨', '1992', '~');
+        var object4 = new Component('许静晨', '1992', '~');
+
+        // 工厂模式创建对象
+        function makeObject(name, start, end) {
+            var o = new Object();
+            o.name = name;
+            o.start = start;
+            o.end = end;
+            o._init_ = function(){
+                console.log(o.name);
+                console.log(o.start);
+                console.log(o.end);
+            };
+            return o;
+        }
+        
+        var object3 = makeObject('许静晨', 1992, '~');
+
+        function MakProto() {};
+        MakProto.prototype.name = 'name';
+        MakProto.prototype.start = 'start...';
+        MakProto.prototype.pause = 'pause...';
+        MakProto.prototype.number = 1;
+
+        object5 = new MakProto();
+        object6 = new MakProto();
+
+        MakProto.prototype.number = 3;
+        object6.number = 9;
+        MakProto.prototype.number = 10;
+
+        object0._init_();
+        object1._init_();
+        object2._init_();
+        object3._init_();
+
+        console.log(object0.constructor == Object); //true
+        console.log(object1.constructor == Object); //true
+        console.log(object2.constructor == Object); //false
+        console.log(object3.constructor == Object); //true
+
+        console.log(object2 == object4);
+        console.log(object2 === object4);
+        console.log(object2.name == object4.name);
+        console.log(object2.name === object4.name);
+        console.log(object2.testFu == object4.testFu);
+        console.log(object2.testFu === object4.testFu);
+
+        console.log(object5.number);
+        console.log(object6.number);
+    }
+</script>
+</html>

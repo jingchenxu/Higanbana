@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>template</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        /*
+        @author jcxu
+        @description 创建一个组件模板
+        */
+        var jcxu = function(config) {
+            var el = config.el || '#app';
+
+            // 先找到组件挂载点
+            var getEl = function() {
+                console.log('挂载点为'+el);
+            };
+
+            var step1 = config.step1 || function () {
+                throw new Error('必须重写step1f方法');
+                return false;
+            }
+
+            var step2 = config.step2 || function () {
+                throw new Error('必须重写step2方法');
+                return false;
+            }
+
+            var F = function() {};
+
+            F.prototype.init = function() {
+                // 按照顺序执行相应的方法
+                getEl();
+                step1();
+                step2();
+            };
+
+            return F;
+        }
+
+
+        var demo = jcxu({
+            el: '.app',
+            step1: function() {
+                console.log('此方法已被重写');
+            }
+        });
+
+        var demo1 = new demo();
+        console.log(demo1);
+        console.dir(demo1);
+        demo1.init();
+    }
+</script>
+</html>

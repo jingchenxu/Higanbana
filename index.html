@@ -11,12 +11,24 @@
 </body>
 <script>
     window.onload = function(){
+        function returnArg() {
+            return arguments;
+        }
+
         function add(a, b) {
             console.log(arguments);
+            var slice = Array.prototype.slice;
+            var defaultArray = slice.call(arguments, 1);
+            console.log(defaultArray);
+            console.log(defaultArray.slice());
+            // apply 会自动的将第二个参数（必须是数组、伪数组）转化为调用函数的参数对象（arguments）
+            //defaultArray.concat([5,6,7])
+            console.log(returnArg.apply(this, defaultArray));
+            //console.log(arguments);
+            console.log(returnArg());
+            console.log(returnArg(defaultArray));
         }
         add(5, 7);
-        var test = [5, 7];
-        console.log(test);
     }
 </script>
 </html>

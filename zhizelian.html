@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>zhizelian</title>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function() {
+        var order500 = function( orderType, pay, stock ) {
+            if (orderType === 1 && pay === true ) {
+                console.log('500元交定金预购，得到100元优惠');
+            }
+            else {
+                return 'nextSuccessor';
+            }
+        };
+
+        var order200 = function( orderType, pay, stock ) {
+            if (orderType === 2 && pay === true ) {
+                console.log('200元交定金预购，得到50优惠券');
+            }
+            else {
+                return 'nextSuccessor';
+            }
+        };
+
+        var orderNormal = function( orderType, pay, stock ) {
+            if( stock > 0) {
+                console.log('普通购买，无优惠券');
+            }
+            else {
+                console.log('手机库存不足');
+            }
+        };
+
+        var Chain = function( fn ) {
+            this.fn = fn;
+            this.successor = null;
+        };
+
+        Chain.prototype.setNextSuccessor = function( successor ) {
+            return this.successor = successor;
+        };
+
+        Chain.prototype.passRequest = function() {
+            var ret = this.fn.apply(this, arguments);
+
+            if( ret === 'nextSuccessor'){
+                // 如果当前是最后一个环节 或是 下一步是最后一个环节 则结束
+                return this.successor && this.successor.passRequest.apply( this.successor, arguments);
+            }
+
+            return ret;
+        };
+
+        var chainOrder500 = new Chain( order500 );
+        var chainOrder200 = new Chain( order200 );
+        var chainOrderNormal = new Chain( orderNormal );
+
+        chainOrder500.setNextSuccessor( chainOrder200 );
+        chainOrder200.setNextSuccessor( chainOrderNormal);
+
+        chainOrder500.passRequest(1, true, 500);
+        chainOrder500.passRequest(2, true, 500);
+        chainOrder500.passRequest(3, true, 500);
+        chainOrder500.passRequest(1, false, 0);
+    }
+</script>
+</html>
