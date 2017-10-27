@@ -9,15 +9,25 @@
 <body>
     <script>
         window.onload = function(){
+            var log = new Object();
+            log.log_title = function(title){
+                console.log('====================='+title+'======================');
+            }
             // Demo构造函数的的父构造函数微Function（）
             // 所以对比通过Object（）构造函数创建对象，本质上通过自定义构造函数创建对象与Object()构造函数创建对象本质上是一样的
             // 通过观察 constructor 对应的父级构造函数可以看到其是由谁继承而来的
             // 构造函数本身也是对象 也是有__proto__的，构造函数对象的原型为
+
+
+            log.log_title('构造函数与对象');
+
+            // 创建构造函数
             var Demo = function(a,b){
                 this.a = a;
                 this.b = b;
             }
 
+            // 指定原型
             Demo.prototype = (function(){
                 var add = function(){
                     return this.a + this.b;
@@ -27,22 +37,85 @@
                     return this.a - this.b;
                 };
                 return {
+                    number: 1,
                     add: add,
                     sub: sub
                 }
             }());
 
             console.dir(Demo);
+            console.dir(Demo.add);
 
             var demo1 = new Demo(1,2);
             // 对象中只有__proto__ 指向的是该对象的构造函数的原型 prototype
             console.dir(demo1);
-
+            console.log(demo1.__proto__.constructor);
+            // 使用字面量创建对象 本质上还是通过Object()构造函数创建对象
             var demo2 = {
                 a: 1,
                 b: 2
             };
             console.dir(demo2);
+            console.log(demo2.prototype);
+
+            var object1 = new Object();
+            console.log(object1);
+            console.log(object1.prototype)
+
+            log.log_title("构造函数与普通函数");
+
+            // 我们开始测试一个普通函数
+            function common() {
+                console.log('this is common');
+                console.log(this);
+                return true;
+            }
+
+
+
+            var common1 = new common();
+            var common2 = common();
+
+            common.prototype = {
+                a: 1
+            };
+
+            common1.prototype = {
+                a: 1
+            };
+            common1.__proto__ = {
+                b: 2,
+                getA: function(){
+                    console.log(this.a);
+                }
+            };
+
+            console.dir(common);
+            console.dir(common1);
+            console.log(common1.a,common1.b);
+            console.dir(common2);
+            console.log(common1.prototype);
+
+
+            var None = function(){
+                this.a = 1,
+                this.b = 2
+            };
+
+            var none1 = new None();
+            console.dir(None);
+            console.dir(None.prototype);
+            console.dir(none1);
+
+            var ar1 = [1,2,3];
+            console.log(ar1.constructor);
+
+            function DEMOB() {}
+
+            var demo10 = new DEMOB();
+
+            console.log(demo10.constructor);
+
         }
     </script>
     
