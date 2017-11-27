@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    window.onload = function () {
+        window.test100 = 'jingchenxu';
+        // a test for closure
+        function father() {
+            var name = 'father';
+            var age = 30;
+
+            return function son() {
+                console.log('father  name' + name);
+                console.log(age++);
+            }
+        }
+
+        var getFather = father();
+        getFather(); getFather(); getFather(); getFather(); getFather();
+
+        console.dir(getFather);
+        console.dir(father);
+
+        +function () {
+            console.log('这里是+')
+        }()
+
+        !function () {
+            console.log('看看这个是不是提前运行！');
+        }()
+
+        function counter() {
+            var count = 0;
+
+            function getCount() {
+                console.log('当前数量:' + count);
+            }
+            function setCount(val) {
+                count = val;
+                console.log('修改数量:' + count);
+            }
+
+            return {
+                getc: getCount,
+                setc: setCount
+            }
+        }
+
+        function test1() {
+            var counter1 = counter();
+            counter1.getc();
+            counter1.setc(5);
+            counter1.getc();
+        }
+
+        function test2() {
+            var counter1 = counter();
+            counter1.getc();
+            counter1.setc(5);
+            counter1.getc();
+        }
+
+        //var emptArray = [];
+
+        var testArray = [{ order: 1, event: '' }, { order: 2, event: '' }, { order: 3, event: '' }, { order: 4, event: '' }, { order: 5, event: '' }, { order: 6, event: '' }];
+
+        function bindE(i) {
+            return function() {
+                console.log('show aside' + i);
+            }
+        }
+
+        for (var i = 0; i < testArray.length; i++) {
+
+                // planA
+/*                 testArray[i].event = function(i) {
+                    console.log('立即执行函数内部'+i);
+                    return function() {
+                        console.log('show closure' + i);
+                    }
+                }(i) */
+                
+                // planB
+                testArray[i].event = function () {
+                    console.dir(this);
+                    console.log('show:' + i);
+                }
+
+                if(i !=0 ) {
+                    console.log('====================');
+                    console.dir(testArray[i-1].event);
+                }
+
+                // planC
+/*                 testArray[i].event = bindE(i); */
+
+        }
+
+        console.dir(testArray[1].event);
+        console.dir(testArray[3].event);
+        console.dir(testArray[2].event);
+        
+
+        testArray[1].event();
+        testArray[3].event();
+        testArray[2].event();
+
+        console.dir(testArray);
+
+
+        test1();
+        test2();
+    }
+</script>
+
+</html>

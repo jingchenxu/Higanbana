@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function() {
+        // promise 是一个构造函数，构造函数传入的参数是一个函数，该函数会 
+        var promise1 = new Promise(function(resolve, reject){
+            console.log('Promise');
+            resolve(1);
+        });
+
+        promise1.then(function (val) {
+            console.log('resolved'+val);
+        });
+
+        console.log('Hi');
+
+        // 通过fetch获取数据, 返回一个promise
+        // 在fetch当中会判断调用的是resolve方法还是reject方法
+
+        var result = fetch('/demojson/demo.json');
+        // A
+        result.then(function(response){
+            // 返回成功的结果
+            console.dir(response);
+        },function(response){
+            // 返回失败的结果
+            console.dir(response);
+        });
+
+        // B
+        result.then(function(response){
+            // 执行返回成功是的结果
+            console.dir(response);
+        }).catch(function(error){
+            // 执行失败时的代码
+            console.dir(error);
+        });
+
+        
+    }
+</script>
+</html>

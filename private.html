@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function() {
+        // demo1
+        var Demo = function() {
+            this.test1 = 1;
+            this.test2 = 2;
+        };
+
+        Demo.prototype = (function(){
+            var getTest1 = function(){
+                return this.test1;
+            };
+            var getTest2 = function(){
+                return this.test2;
+            }
+            return {
+                getTest1: getTest1,
+                getTest2: getTest2
+            }
+        }());
+        console.dir(Demo);
+        console.log(Demo.test1);
+        console.log(Demo.getTest2());
+
+    }
+</script>
+</html>
