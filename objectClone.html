@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function() {
+        var test1 = {
+            param1: 'xu',
+            param2: 'jing',
+            param3: 'chen'
+        }
+
+        var test2 = Object.create(test1);
+
+        console.dir(test2);
+        console.log(test2.param3);
+        // test2.param3 = 'dandan';
+        console.dir(test1);
+        console.log(test1.param3);
+        console.dir(test2);
+        console.log(test2.param3);
+
+        console.dir((new Object()).__proto__.__proto__);
+    }
+</script>
+</html>
