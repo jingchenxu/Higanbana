@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function(){
+        var object = new Object();
+        // 这里我们可以清楚的看到object的构造函数为Object()
+        console.dir(object.constructor);
+        var Demo = function() {
+            this.myName = 'xu';
+            this.age = 26;
+        },
+        demo1 = new Demo();
+        // 这里我们可以看到demo1的构造函数为Demo()
+        console.dir(demo1.constructor);
+        var demo2 = Object.create(demo1);
+        // 这里的demo2是通过复制demo1得到的
+        console.dir(demo2.constructor);
+        // javascript中所有的对象都是基于原型的，所谓的基于原型，就是对象的创建是通过复制扩展对象的方式而实现的
+        // 所谓的构造函数是通过复制或扩展基础函数从而创建对象的函数
+        // 构造函数Demo()可以看作是通过复制或扩展{myName: 'xu',age: 28}实现的
+        // 通过修改基础对象我们可以为类（构造函数Demo())创建的对象添加属性
+        demo2.constructor.prototype.fullName = 'xujingchen';
+        // demo1和demo2都添加了fullName属性
+        console.dir(demo1);
+        console.dir(demo2.fullName);
+        // 对象通过修改constructor构造函数能否修改属性
+        var NewDemo = function() {
+            this.newName = 'ux'
+        }
+        demo1.constructor = NewDemo;
+        console.dir(demo1.newName);
+
+    
+    }
+</script>
+</html>
