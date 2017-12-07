@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function(){
+        var Chain = function(){
+            this.get1 = function(a1){
+                this.a1 = a1;
+                return this;
+            }
+
+            this.get2 = function(a2){
+                this.a2 = a2;
+                return this;
+            }
+
+            this.get3 = function(a3){
+                this.a3 = a3;
+                return this;
+            }
+        }
+
+        var chain = new Chain();
+        console.dir(chain.get1(1).get2(2).get3(3));
+    }
+</script>
+</html>
